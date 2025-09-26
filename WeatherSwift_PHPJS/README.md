@@ -23,7 +23,7 @@ Follow the TODO comments in each file to implement the required functionality.
 
 ### API Integration
 - Use OpenWeatherMap Current Weather API
-- **API Documentation:** [OpenWeather One Call API 3.0](https://openweathermap.org/api/one-call-3) - Complete guide and reference
+- **API Documentation:** [OpenWeather API 3.0](https://openweathermap.org/api/)
 
 
 ## 🧪 Testing Your Implementation
