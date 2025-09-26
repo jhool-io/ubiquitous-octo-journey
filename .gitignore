@@ -1,0 +1,5 @@
+*.bin
+.local/*
+.replit
+keys.txt
+.DS_Store
