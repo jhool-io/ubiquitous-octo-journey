@@ -33,25 +33,6 @@ Follow the TODO comments in each file to implement the required functionality.
 └── README.md              # This file
 ```
 
-## 🎯 Implementation Tasks
-
-### Backend (index.php)
-- [ ] Add your OpenWeatherMap API key
-- [ ] Complete the API endpoint URL
-- [ ] Extract city parameter from GET request
-- [ ] Validate and sanitize city input
-- [ ] Make HTTP request to OpenWeatherMap API
-- [ ] Handle API response and extract weather data
-- [ ] Return structured JSON response
-- [ ] Implement proper error handling
-
-### Frontend (app.js)
-- [ ] Complete the API call to your PHP backend
-- [ ] Handle form submission and validation
-- [ ] Update state variables with API response
-- [ ] Implement proper error handling
-- [ ] Display weather data in the UI
-
 ## 🔧 Technical Requirements
 
 ### API Integration
