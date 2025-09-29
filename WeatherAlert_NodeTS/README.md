@@ -3,6 +3,7 @@
 ![Weather Alert System](https://img.shields.io/badge/Assessment-Node.js%20%2B%20TypeScript%20%2B%20SQLite-blue)
 
 **Technology Stack:** Node.js + TypeScript + Express.js + SQLite + OpenWeatherMap API
+
 **Goal:** Build a comprehensive Weather Alert System where users can create location-based weather alerts and receive notifications when conditions are met.
 
 ## 🚀 Complete the Implementation
