@@ -8,7 +8,7 @@
 
 ## 🚀 Complete the Implementation
 
-Follow the TODO comments throughout the codebase to implement the required functionality. Each file contains detailed TODO markers indicating exactly what needs to be implemented.
+Use the TODO comments throughout the codebase to implement the required functionality. Treat them as guidance and not strict instructions
 
 ## 📁 Project Structure
 
@@ -163,7 +163,7 @@ The database migration includes sample data:
 
 ## 🔑 Environment Variables
 
-Create a `.env` file or use the provided `keys.txt`:
+Create a `.env` file:
 
 ```env
 OPENWEATHER_API_KEY=your_api_key_here
