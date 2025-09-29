@@ -3,11 +3,12 @@
 ![Weather Alert System](https://img.shields.io/badge/Assessment-Node.js%20%2B%20TypeScript%20%2B%20SQLite-blue)
 
 **Technology Stack:** Node.js + TypeScript + Express.js + SQLite + OpenWeatherMap API
+
 **Goal:** Build a comprehensive Weather Alert System where users can create location-based weather alerts and receive notifications when conditions are met.
 
 ## 🚀 Complete the Implementation
 
-Follow the TODO comments throughout the codebase to implement the required functionality. Each file contains detailed TODO markers indicating exactly what needs to be implemented.
+Use the TODO comments throughout the codebase to implement the required functionality. Treat them as guidance and not strict instructions
 
 ## 📁 Project Structure
 
@@ -162,7 +163,7 @@ The database migration includes sample data:
 
 ## 🔑 Environment Variables
 
-Create a `.env` file or use the provided `keys.txt`:
+Create a `.env` file:
 
 ```env
 OPENWEATHER_API_KEY=your_api_key_here
