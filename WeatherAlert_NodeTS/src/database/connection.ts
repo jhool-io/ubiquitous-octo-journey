@@ -48,7 +48,6 @@ class DatabaseConnection {
 
   /**
    * Execute a SQL query that returns data (SELECT)
-   * TODO: Implement this method to handle SELECT queries
    */
   public async query<T = any>(sql: string, params: any[] = []): Promise<QueryResult<T>> {
     return new Promise((resolve, reject) => {
@@ -57,26 +56,22 @@ class DatabaseConnection {
         return;
       }
 
-      // TODO: Implement SELECT query execution
-      // this.db.all(sql, params, (err: Error | null, rows: T[]) => {
-      //   if (err) {
-      //     reject(err);
-      //   } else {
-      //     resolve({
-      //       rows,
-      //       rowCount: rows.length
-      //     });
-      //   }
-      // });
-
-      // TODO: Remove this placeholder and implement actual query
-      throw new Error('TODO: Implement query method');
+      this.db.all(sql, params, (err: Error | null, rows: T[]) => {
+        if (err) {
+          console.error('Query error:', err.message);
+          reject(err);
+        } else {
+          resolve({
+            rows: rows || [],
+            rowCount: rows ? rows.length : 0
+          });
+        }
+      });
     });
   }
 
   /**
    * Execute a SQL command that modifies data (INSERT, UPDATE, DELETE)
-   * TODO: Implement this method to handle data modification queries
    */
   public async run(sql: string, params: any[] = []): Promise<QueryResult> {
     return new Promise((resolve, reject) => {
@@ -85,27 +80,23 @@ class DatabaseConnection {
         return;
       }
 
-      // TODO: Implement INSERT/UPDATE/DELETE query execution
-      // this.db.run(sql, params, function(err: Error | null) {
-      //   if (err) {
-      //     reject(err);
-      //   } else {
-      //     resolve({
-      //       rows: [],
-      //       rowCount: this.changes,
-      //       lastInsertId: this.lastID
-      //     });
-      //   }
-      // });
-
-      // TODO: Remove this placeholder and implement actual run method
-      throw new Error('TODO: Implement run method');
+      this.db.run(sql, params, function(this: sqlite3.RunResult, err: Error | null) {
+        if (err) {
+          console.error('Run error:', err.message);
+          reject(err);
+        } else {
+          resolve({
+            rows: [],
+            rowCount: this.changes || 0,
+            lastInsertId: this.lastID
+          });
+        }
+      });
     });
   }
 
   /**
    * Execute multiple SQL statements in a transaction
-   * TODO: Implement transaction support
    */
   public async transaction(queries: Array<{ sql: string; params?: any[] }>): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -114,29 +105,60 @@ class DatabaseConnection {
         return;
       }
 
-      // TODO: Implement transaction logic
-      // this.db.serialize(() => {
-      //   this.db!.run('BEGIN TRANSACTION');
-      //
-      //   try {
-      //     for (const query of queries) {
-      //       this.db!.run(query.sql, query.params || []);
-      //     }
-      //     this.db!.run('COMMIT', (err) => {
-      //       if (err) {
-      //         reject(err);
-      //       } else {
-      //         resolve();
-      //       }
-      //     });
-      //   } catch (error) {
-      //     this.db!.run('ROLLBACK');
-      //     reject(error);
-      //   }
-      // });
+      this.db.serialize(() => {
+        this.db!.run('BEGIN TRANSACTION', (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
 
-      // TODO: Remove this placeholder and implement actual transaction
-      throw new Error('TODO: Implement transaction method');
+          let completed = 0;
+          let hasError = false;
+
+          const rollback = (error: Error) => {
+            if (hasError) return; // Prevent multiple rollbacks
+            hasError = true;
+            this.db!.run('ROLLBACK', () => {
+              reject(error);
+            });
+          };
+
+          const checkCompletion = () => {
+            if (hasError) return;
+            completed++;
+            if (completed === queries.length) {
+              this.db!.run('COMMIT', (commitErr) => {
+                if (commitErr) {
+                  rollback(commitErr);
+                } else {
+                  resolve();
+                }
+              });
+            }
+          };
+
+          if (queries.length === 0) {
+            this.db!.run('COMMIT', (commitErr) => {
+              if (commitErr) {
+                reject(commitErr);
+              } else {
+                resolve();
+              }
+            });
+            return;
+          }
+
+          for (const query of queries) {
+            this.db!.run(query.sql, query.params || [], (err) => {
+              if (err) {
+                rollback(err);
+              } else {
+                checkCompletion();
+              }
+            });
+          }
+        });
+      });
     });
   }
 
