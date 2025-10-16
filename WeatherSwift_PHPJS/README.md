@@ -4,10 +4,9 @@
 
 
 **Technology Stack:** PHP + React + OpenWeatherMap API
+
 **Goal:** Build a functional weather search app where users can enter a city name and see current weather data.
 
-## 🚀 Complete the Implementation
-Follow the TODO comments in each file to implement the required functionality.
 
 ## 📁 Project Structure
 

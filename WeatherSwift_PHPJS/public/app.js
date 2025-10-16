@@ -1,8 +1,29 @@
 /**
  * Weather Search App - React Frontend
  *
- * This file contains the React components for the weather search application.
- * Candidates need to implement the API integration and component logic.
+ * A React-based frontend application for searching and displaying weather information.
+ * This application provides a modern, responsive interface for weather data retrieval.
+ *
+ * MINIMUM EXPECTATIONS:
+ * - Implement API integration with the PHP backend
+ * - Handle form submission and input validation
+ * - Display weather data in a user-friendly format
+ * - Implement proper error handling and loading states
+ * - Ensure responsive design and good user experience
+ *
+ * REQUIRED FUNCTIONALITY:
+ * - Search form with city input validation
+ * - API calls to /api/weather endpoint
+ * - Weather data display with temperature, description, humidity, and wind speed
+ * - Error handling for network issues and invalid cities
+ * - Loading indicators during API requests
+ *
+ * COMPONENTS:
+ * - WeatherApp: Main application component
+ * - SearchForm: City input and search functionality
+ * - WeatherDisplay: Weather data presentation
+ * - ErrorMessage: Error display component
+ * - LoadingSpinner: Loading state indicator
  */
 
 const { useState, useEffect } = React;
@@ -11,52 +32,39 @@ const { useState, useEffect } = React;
  * Main Weather App Component
  */
 function WeatherApp() {
-    // TODO: Set up state variables for the application
-    const [city, setCity] = useState(''); // TODO: State for city input
-    const [weatherData, setWeatherData] = useState(null); // TODO: State for weather data
-    const [loading, setLoading] = useState(false); // TODO: Loading state
-    const [error, setError] = useState(''); // TODO: Error state
+    const [city, setCity] = useState('');
+    const [weatherData, setWeatherData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     /**
      * Handle form submission
      */
     const handleSearch = async (e) => {
-        // TODO: Prevent default form submission
-        // e.preventDefault();
-
-        // TODO: Validate city input
-        if (false /* TODO: Add validation condition */) {
+        e.preventDefault();
+        if (false) {
             setError('Please enter a city name');
             return;
         }
 
-        // TODO: Clear previous error and set loading state
         setError('');
         setLoading(true);
 
         try {
-            // TODO: Make API call to your PHP backend
-            const response = await fetch(/* TODO: Add API endpoint URL with city parameter */);
+            const response = await fetch('');
 
-            // TODO: Check if response is successful
-            if (false /* TODO: Check response.ok */) {
-                // TODO: Parse JSON response
+            if (false) {
                 const data = await response.json();
-
-                // TODO: Update weather data state
                 setWeatherData(data);
             } else {
-                // TODO: Handle API error response
                 const errorData = await response.json();
                 setError(errorData.error || 'Failed to fetch weather data');
             }
 
         } catch (error) {
-            // TODO: Handle network errors
             console.error('Weather API Error:', error);
             setError('Unable to connect to weather service. Please try again.');
         } finally {
-            // TODO: Set loading to false
             setLoading(false);
         }
     };
@@ -65,7 +73,6 @@ function WeatherApp() {
      * Clear search results
      */
     const clearResults = () => {
-        // TODO: Reset all state variables
         setWeatherData(null);
         setCity('');
         setError('');
@@ -119,7 +126,6 @@ function SearchForm({ city, setCity, onSearch, loading, onClear }) {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         disabled={loading}
-                        // TODO: Add proper input validation attributes
                         required
                         minLength="2"
                     />
@@ -163,7 +169,6 @@ function SearchForm({ city, setCity, onSearch, loading, onClear }) {
  * Weather Display Component
  */
 function WeatherDisplay({ data }) {
-    // TODO: Extract data from the weather response
     const {
         city,
         country,
@@ -174,7 +179,6 @@ function WeatherDisplay({ data }) {
         icon
     } = data;
 
-    // TODO: Create weather icon URL
     const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
     return (
@@ -183,24 +187,20 @@ function WeatherDisplay({ data }) {
                 <div className="location">
                     <h2>
                         <i className="fas fa-map-marker-alt"></i>
-                        {/* TODO: Display city and country */}
                         {city}, {country}
                     </h2>
                 </div>
                 <div className="weather-icon">
-                    {/* TODO: Display weather icon */}
                     <img src={iconUrl} alt={description} />
                 </div>
             </div>
 
             <div className="weather-main">
                 <div className="temperature">
-                    {/* TODO: Display temperature with proper formatting */}
                     <span className="temp-value">{Math.round(temperature)}</span>
                     <span className="temp-unit">°C</span>
                 </div>
                 <div className="description">
-                    {/* TODO: Display weather description with proper capitalization */}
                     {description.charAt(0).toUpperCase() + description.slice(1)}
                 </div>
             </div>
@@ -212,7 +212,6 @@ function WeatherDisplay({ data }) {
                     </div>
                     <div className="detail-content">
                         <span className="detail-label">Humidity</span>
-                        {/* TODO: Display humidity percentage */}
                         <span className="detail-value">{humidity}%</span>
                     </div>
                 </div>
@@ -223,7 +222,6 @@ function WeatherDisplay({ data }) {
                     </div>
                     <div className="detail-content">
                         <span className="detail-label">Wind Speed</span>
-                        {/* TODO: Display wind speed */}
                         <span className="detail-value">{windSpeed} m/s</span>
                     </div>
                 </div>
